@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#101426"><meta name="description" content="DUDE AI personal assistant">
+<link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./icon.svg">
+<title>DUDE AI</title>
+<style>
+:root{--bg:#0b1020;--panel:#141c31;--panel2:#1c2742;--text:#f4f6ff;--muted:#aab5d0;--line:#2a3654;--accent:#8878ff;--mint:#49d5b4;--danger:#ff7777}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}
+button,input,textarea{font:inherit}button{border:0;border-radius:13px;background:var(--accent);color:white;padding:11px 14px;font-weight:650;cursor:pointer}button.secondary{background:var(--panel2);border:1px solid var(--line)}button:disabled{opacity:.5}
+.app{max-width:900px;margin:auto;padding:16px;padding-bottom:30px}.head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:8px 0 18px}.brand{display:flex;align-items:center;gap:11px}.logo{width:46px;height:46px;border-radius:15px;background:linear-gradient(135deg,var(--accent),var(--mint));display:grid;place-items:center;font-size:24px}.brand h1{font-size:22px;line-height:1.1;margin:0}.muted,.small{color:var(--muted)}.small{font-size:12px}.nav{display:flex;gap:8px;overflow:auto;padding-bottom:12px}.nav button{white-space:nowrap;background:var(--panel2);border:1px solid var(--line)}.nav button.active{background:#fff;color:#17152c}
+.page{display:none}.page.active{display:block}.card{background:var(--panel);border:1px solid var(--line);border-radius:19px;padding:16px;margin:10px 0}.hero{background:linear-gradient(125deg,#302c68,#155052);border-color:#514d89}.hero h2{margin:0 0 6px;font-size:22px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.tile{text-align:left;background:var(--panel2);border:1px solid var(--line);min-height:90px}.tile strong{display:block;margin:5px 0}.tile span{font-size:12px;color:var(--muted);font-weight:400}
+.field{width:100%;background:#0a1224;color:var(--text);border:1px solid var(--line);border-radius:12px;padding:12px;outline:none}.field:focus{border-color:var(--accent)}.row{display:flex;gap:8px}.row .field{flex:1;min-width:0}
+.status{display:flex;align-items:center;gap:8px;padding:10px 12px;background:#332b17;border:1px solid #665327;border-radius:12px;color:#ffe3a1;font-size:13px}.dot{width:8px;height:8px;border-radius:50%;background:#ffc85b;flex:none}
+.listitem{display:flex;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}.listitem:last-child{border:0}.listitem span{flex:1;overflow-wrap:anywhere}.listitem.done span{text-decoration:line-through;color:var(--muted)}
+.chatlog{height:310px;overflow:auto;display:flex;flex-direction:column;gap:9px;padding:4px}.bubble{max-width:88%;padding:10px 13px;border-radius:15px;white-space:pre-wrap}.bubble.user{align-self:flex-end;background:#5548b5}.bubble.system{align-self:flex-start;background:var(--panel2)}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:22px 5px}
+@media(min-width:700px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:420px){.app{padding:12px}.grid{grid-template-columns:1fr 1fr}.row{flex-wrap:wrap}.row .field{flex-basis:100%}}
+</style></head>
+<body><div class="app">
+<header class="head"><div class="brand"><div class="logo">✦</div><div><h1>DUDE AI</h1><div class="small">Your personal AI workspace</div></div></div><button class="secondary" id="installBtn" hidden>Install</button></header>
+<nav class="nav"><button class="active" data-page="home">Home</button><button data-page="chat">AI Chat</button><button data-page="coach">Coach</button><button data-page="tasks">To-do</button><button data-page="notes">Memory</button><button data-page="settings">Settings</button></nav>
+<main>
+<section class="page active" id="home">
+<div class="card hero"><h2>Vanakkam! 👋</h2><p>Welcome to DUDE AI. Your personal workspace for learning, planning and growth.</p><div class="small">Foundation v1 • Mobile-first • Offline-capable app shell</div></div>
+<div class="status"><span class="dot"></span><span><b>AI engine not connected yet.</b> No fake AI replies. We will connect a real model in the next development stage.</span></div>
+<div class="grid" style="margin-top:12px">
+<button class="tile" data-open="chat">💬<strong>AI Chat</strong><span>Real AI connection is next</span></button>
+<button class="tile" data-open="coach">🌱<strong>Personal Coach</strong><span>Daily reflection prompts</span></button>
+<button class="tile" data-open="tasks">✅<strong>To-do</strong><span>Tasks saved on this device</span></button>
+<button class="tile" data-open="notes">🧠<strong>Memory & Notes</strong><span>Local notes you control</span></button>
+<button class="tile" data-open="settings">🔐<strong>Privacy</strong><span>Storage and data controls</span></button>
+<button class="tile" data-open="coach">🎯<strong>Goals</strong><span>Plan one step at a time</span></button>
+</div></section>
+<section class="page" id="chat"><div class="card"><h2>AI Chat</h2><p class="muted">The real AI engine will be connected in the next stage. This screen does not pretend to answer with an AI model.</p><div class="status">AI is not connected. Your messages are not sent anywhere.</div><div id="chatlog" class="chatlog"><div class="bubble system">DUDE AI foundation is ready. Connect a real model to start intelligent conversations.</div></div><form id="chatForm" class="row"><input id="chatInput" class="field" placeholder="Write a message..." disabled><button disabled>Send</button></form></div></section>
+<section class="page" id="coach"><div class="card hero"><h2>Personal Coach 🌱</h2><p>Build steady habits with realistic steps. You choose your pace.</p></div><div class="card"><b>Daily check-in</b><p class="muted">Pick one area to reflect on today.</p><div class="grid"><button class="tile" data-prompt="study">📚<strong>Learning</strong><span>What can I learn today?</span></button><button class="tile" data-prompt="wellbeing">💚<strong>Wellbeing</strong><span>How am I feeling?</span></button><button class="tile" data-prompt="goals">🎯<strong>Goals</strong><span>What is one next step?</span></button><button class="tile" data-prompt="rest">🌙<strong>Rest</strong><span>Have I made time to rest?</span></button></div><p id="coachPrompt" class="muted" aria-live="polite">Choose a check-in to see a reflection prompt.</p></div></section>
+<section class="page" id="tasks"><div class="card"><h2>My To-do</h2><p class="muted">Stored locally in this browser on this device.</p><form id="taskForm" class="row"><input id="taskInput" class="field" placeholder="Add a task..." required><button>Add</button></form><div id="taskList"></div></div></section>
+<section class="page" id="notes"><div class="card"><h2>Personal Memory & Notes</h2><p class="muted">These notes stay in this browser. This is not cloud-synced memory.</p><textarea id="noteInput" class="field" rows="4" placeholder="Write a note..."></textarea><div class="row" style="margin-top:9px"><button id="saveNote">Save note</button><button class="secondary" id="exportBtn">Export backup</button></div><div id="noteList"></div></div></section>
+<section class="page" id="settings"><div class="card"><h2>Settings & Privacy</h2><p>Data location: this browser's local storage.</p><p class="muted">Clearing browser data may remove saved notes and tasks. Export a backup before clearing site data.</p><button class="secondary" id="downloadBackup">Download data backup</button><p class="small">No passwords, API keys or private credentials are stored in this app.</p></div></section>
+</main><footer>DUDE AI • Foundation v1 • Real AI integration pending • Built for gradual, tested development</footer></div>
+<script>
+const $=s=>document.querySelector(s),$$=s=>document.querySelectorAll(s);
+const read=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}},write=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
+function show(id){$$('.page').forEach(p=>p.classList.toggle('active',p.id===id));$$('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===id));}
+$$('[data-page]').forEach(b=>b.addEventListener('click',()=>show(b.dataset.page)));
+$$('[data-open]').forEach(b=>b.addEventListener('click',()=>show(b.dataset.open)));
+let tasks=read('dude_tasks',[]),notes=read('dude_notes',[]);
+function renderTasks(){let root=$('#taskList');root.replaceChildren();tasks.forEach((t,i)=>{let row=document.createElement('div');row.className='listitem'+(t.done?' done':'');let cb=document.createElement('input');cb.type='checkbox';cb.checked=t.done;cb.addEventListener('change',()=>{tasks[i].done=cb.checked;write('dude_tasks',tasks);renderTasks()});let label=document.createElement('span');label.textContent=t.text;let del=document.createElement('button');del.className='secondary';del.textContent='Delete';del.addEventListener('click',()=>{tasks.splice(i,1);write('dude_tasks',tasks);renderTasks()});row.append(cb,label,del);root.append(row)})}
+$('#taskForm').addEventListener('submit',e=>{e.preventDefault();let v=$('#taskInput').value.trim();if(!v)return;tasks.push({text:v,done:false});write('dude_tasks',tasks);$('#taskInput').value='';renderTasks()});renderTasks();
+function renderNotes(){let root=$('#noteList');root.replaceChildren();notes.forEach((n,i)=>{let row=document.createElement('div');row.className='listitem';let label=document.createElement('span');label.textContent=n;let del=document.createElement('button');del.className='secondary';del.textContent='Delete';del.addEventListener('click',()=>{notes.splice(i,1);write('dude_notes',notes);renderNotes()});row.append(label,del);root.append(row)})}
+$('#saveNote').addEventListener('click',()=>{let v=$('#noteInput').value.trim();if(!v)return;notes.unshift(v);write('dude_notes',notes);$('#noteInput').value='';renderNotes()});renderNotes();
+function backup(){let blob=new Blob([JSON.stringify({version:1,createdAt:new Date().toISOString(),tasks,notes},null,2)],{type:'application/json'});let url=URL.createObjectURL(blob);let a=document.createElement('a');a.href=url;a.download='dude-ai-backup.json';a.click();URL.revokeObjectURL(url)}
+$('#exportBtn').addEventListener('click',backup);$('#downloadBackup').addEventListener('click',backup);
+const prompts={study:'Choose one topic and define a small, realistic learning session.',wellbeing:'Pause and name one thing that would support your wellbeing right now.',goals:'Write one achievable next action for a goal that matters to you.',rest:'Plan a proper break. Rest is part of a sustainable routine.'};
+$$('[data-prompt]').forEach(b=>b.addEventListener('click',()=>$('#coachPrompt').textContent=prompts[b.dataset.prompt]));
+let installEvent;window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();installEvent=e;$('#installBtn').hidden=false});$('#installBtn').addEventListener('click',async()=>{if(installEvent){installEvent.prompt();installEvent=null;$('#installBtn').hidden=true}});
+if('serviceWorker'in navigator && location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
+</script></body></html>
